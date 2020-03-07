@@ -1,0 +1,38 @@
+{
+  "name": "ts-redux",
+  "version": "1.0.0",
+  "description": "Type-Safe Redux",
+  "main": "build/index.js",
+  "types": "build/index.d.ts",
+  "files": [
+    "build/**/*"
+  ],
+  "scripts": {
+    "test": "jest",
+    "lint": "tslint -p tsconfig.json",
+    "build": "tsc",
+    "watchTest": "jest --watchAll",
+    "testWithCoverage": "jest --coverage"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rusith/ts-redux.git"
+  },
+  "keywords": [
+    "typesafe",
+    "redux"
+  ],
+  "author": "Rusith",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/rusith/ts-redux/issues"
+  },
+  "homepage": "https://github.com/rusith/ts-redux#readme",
+  "devDependencies": {
+    "@types/jest": "^25.1.4",
+    "jest": "^25.1.0",
+    "ts-jest": "^25.2.1",
+    "tslint": "^6.0.0",
+    "typescript": "^3.8.3"
+  }
+}

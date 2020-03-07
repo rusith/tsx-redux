@@ -1,0 +1,26 @@
+name: Publish
+on:
+  push:
+    branches:
+      - release
+    tags:
+      - '*'
+env:
+  NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+jobs:
+  publish:
+    name: Publish the Package to NPM
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node: [10]
+    steps:
+      - uses: actions/checkout@v1
+      - name: Setup Node JS
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node }}
+      - name: Install Packages
+        run: npm i
+      - name: Publish
+        run: npm publish

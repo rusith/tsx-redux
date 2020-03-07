@@ -1,0 +1,51 @@
+name: Test
+on:
+  push:
+    branches-ignore:
+      - 'release'
+env:
+  NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+jobs:
+  lint:
+    name: Lint the Code
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node: [10]
+    steps:
+      - uses: actions/checkout@v1
+      - name: Setup Node JS
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node }}
+      - name: NPM Install
+        run: npm i
+      - name: Lint Using TsLint
+        run: npm run lint
+  test:
+    name: Run Tests
+    runs-on: ubuntu-latest
+    needs: lint
+    strategy:
+      matrix:
+        node: [10]
+    steps:
+      - uses: actions/checkout@v1
+      - name: Setup Node JS
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node }}
+      - name: Install Global Dependancies
+        run: npm install codecov -g
+      - name: Install Node Packages
+        run: npm install
+      - name: Run Tests With Jest
+        run: npm run testWithCoverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          file: ./coverage/coverage-final.json
+          flags: unittests
+          name: codecov-umbrella
+          fail_ci_if_error: true

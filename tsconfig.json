@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "lib": ["es2016", "DOM"],
+    "module": "commonjs",
+    "target": "es2016",
+    "inlineSourceMap": true,
+    "baseUrl": "./src",
+    "outDir": "./build",
+    "experimentalDecorators": true,
+    "declaration": true
+  },
+  "include": [
+    "src"
+  ],
+  "exclude": ["__tests__", "node_modules", "__mocks__"]
+}
