@@ -1,1 +1,1 @@
-Type-Safe Redux
+Type-Safe Redux (In Development)
