@@ -1,6 +1,6 @@
 {
   "name": "ts-redux",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "Type-Safe Redux",
   "main": "build/index.js",
   "types": "build/index.d.ts",
