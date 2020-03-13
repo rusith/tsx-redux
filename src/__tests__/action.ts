@@ -1,4 +1,4 @@
-import {createAction} from "../action";
+import {createAction, getType} from "../action";
 
 describe("createAction", () => {
     test("fails if type is null", () => {
@@ -26,5 +26,14 @@ describe("createAction", () => {
     test("action should have the given type", () => {
         const action = createAction<number>("SomeAction");
         expect(action.type).toBe("SomeAction");
+    });
+});
+
+describe("getType", () => {
+    test("should return the type of the action", () => {
+        const action = createAction("MyAction");
+        const type = getType(action);
+
+        expect(type).toBe("MyAction")
     });
 });

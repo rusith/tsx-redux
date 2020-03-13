@@ -13,3 +13,8 @@ export const createAction = <PayloadType>(type: string) : Action<PayloadType> =>
 
     return action;
 };
+
+export const getType = <PayloadType>(action: Action<PayloadType>) => {
+    return action.type;
+};
+
