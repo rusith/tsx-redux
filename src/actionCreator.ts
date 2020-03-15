@@ -13,9 +13,7 @@ export interface Action<T extends string> extends BaseAction {
     readonly error?: boolean;
 }
 
-export interface GenericActionCreator<T extends string> {
-    (...args: any[]): Action<T>;
-}
+export type GenericActionCreator<T extends string> = (...args: any[]) => Action<T>;
 
 export interface IActionCreator<T extends string> extends GenericActionCreator<T> {
     type: T;
@@ -30,7 +28,7 @@ function isActionCreator<T extends string>(builder: GenericActionCreator<T>): bu
 }
 
 export function actionCreator<T extends string>(type: T): <P = void>() => (payload: P) => { type: T; payload: P; };
-export function actionCreator<T extends string, 
+export function actionCreator<T extends string,
     InnerCreator extends GenericActionCreator<T>>(type: T, customCreatorCallback: (type: T) => InnerCreator): InnerCreator;
 
 export function actionCreator<T extends string, InnerCreator extends GenericActionCreator<T>, >
