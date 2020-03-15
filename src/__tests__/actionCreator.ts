@@ -1,25 +1,25 @@
-import {actionCreator, isType} from "../actionCreator";
+import {action, isType} from "../action";
 
 describe("actionCreator", () => {
     test("has a type extended string", () => {
-        actionCreator("T");
+        action("T");
     });
 
     test("returns a function", () => {
-        const af = actionCreator("T");
+        const af = action("T");
         expect(typeof af === "function");
     });
 
     test("payload action creator will return payload and type", () => {
-        const ac = actionCreator("AC")<string>();
-        const action = ac("data");
+        const ac = action("AC")<string>();
+        const act = ac("data");
 
-        expect(action.type).toBe("AC");
-        expect(action.payload).toBe("data");
+        expect(act.type).toBe("AC");
+        expect(act.payload).toBe("data");
     });
 
     test("action creator should be customizable through a function", () => {
-        const ac = actionCreator("AC", (type) => {
+        const ac = action("AC", (type) => {
             return (data) => ({
                 type,
                 data,
@@ -34,19 +34,37 @@ describe("actionCreator", () => {
 
 describe("isType", () => {
     test("should be true for correct type", () => {
-        const creator = actionCreator("ACTION_1")<string>();
-        const action = creator("data");
-        expect(isType(action, creator)).toBeTruthy();
+        const creator = action("ACTION_1")<string>();
+        const act = creator("data");
+        expect(isType(act, creator)).toBeTruthy();
     });
 
     test("should be true for custom implementations", () => {
-        const creator = actionCreator("ACTION_1", (type) => {
+        const creator = action("ACTION_1", (type) => {
             return (data) => ({
                 type,
                 payload: data,
             })
         });
-        const action = creator("data");
-        expect(isType(action, creator)).toBeTruthy();
+        const act = creator("data");
+        expect(isType(act, creator)).toBeTruthy();
+    });
+
+
+    test("should predict the payload type", () => {
+        const creator = action("ACTION_1", (type) => {
+            return (data) => ({
+                type,
+                payload: data,
+                data
+            })
+        });
+        const act = creator("data");
+        if (isType(act, creator)) {
+            expect(act.data).not.toBeNull();
+        }
     });
 });
+
+
+
