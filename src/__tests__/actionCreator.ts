@@ -1,4 +1,4 @@
-import {actionCreator} from "../actionCreator";
+import {actionCreator, isType} from "../actionCreator";
 
 describe("actionCreator", () => {
     test("has a type extended string", () => {
@@ -29,5 +29,24 @@ describe("actionCreator", () => {
         const act = ac("data-01");
         expect(act.data).toBe("data-01");
         expect(act.type).toBe("AC");
+    });
+});
+
+describe("isType", () => {
+    test("should be true for correct type", () => {
+        const creator = actionCreator("ACTION_1")<string>();
+        const action = creator("data");
+        expect(isType(action, creator)).toBeTruthy();
+    });
+
+    test("should be true for custom implementations", () => {
+        const creator = actionCreator("ACTION_1", (type) => {
+            return (data) => ({
+                type,
+                payload: data,
+            })
+        });
+        const action = creator("data");
+        expect(isType(action, creator)).toBeTruthy();
     });
 });
