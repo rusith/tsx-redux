@@ -12,5 +12,5 @@
   "include": [
     "src"
   ],
-  "exclude": ["__tests__", "node_modules", "__mocks__"]
+  "exclude": ["**/__tests__/*", "node_modules", "__mocks__"]
 }
