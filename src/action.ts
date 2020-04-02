@@ -2,7 +2,7 @@ export interface Metadata {
     [k: string]: any;
 }
 
-interface BaseAction {
+export interface BaseAction {
     readonly type: any;
 }
 
