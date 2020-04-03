@@ -16,8 +16,7 @@ export interface Action<T extends string> extends BaseAction {
 export type GenericActionCreator<T extends string> = (...args: any[]) => Action<T>;
 
 export interface IActionCreator<T extends string> extends GenericActionCreator<T> {
-    type: T;
-
+    type: T,
     match(action: BaseAction): action is Action<T>;
 }
 
@@ -27,7 +26,9 @@ function isActionCreator<T extends string>(builder: GenericActionCreator<T>): bu
     );
 }
 
-export function action<T extends string>(type: T): <P = void>() => (payload: P) => { type: T; payload: P; };
+export type PayloadAction<P, T> = (payload: P) => { type: T; payload: P; }
+
+export function action<T extends string>(type: T): <P = void>() => PayloadAction<P, T>;
 export function action<T extends string,
     InnerCreator extends GenericActionCreator<T>>(type: T, customCreatorCallback: (type: T) => InnerCreator): InnerCreator;
 
@@ -58,4 +59,9 @@ export function isType<
     return isActionCreator(creator) && creator.match(act);
 }
 
-
+export function getType<
+    T extends string,
+    Builder extends GenericActionCreator<T>
+    >(creator: Builder): T {
+    return (creator as any).type;
+}

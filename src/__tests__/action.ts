@@ -1,4 +1,5 @@
-import {action, isType} from "../action";
+import {action, getType, isType} from "../action";
+import {actionSet} from "../actionSet";
 
 describe("actionCreator", () => {
     test("has a type extended string", () => {
@@ -64,6 +65,31 @@ describe("isType", () => {
             expect(act.data).not.toBeNull();
         }
     });
+});
+
+describe("getType", () => {
+    test("should return the type of the action for empty action", () => {
+        const creator = action("ACTION_1")();
+        const type = getType(creator);
+        
+        expect(type).toBe("ACTION_1");
+    });
+    
+    test("Should return the type of the action for payload action", () => {
+        const creator = action("ACTION_113")<number>();
+        const type = getType(creator);
+
+        expect(type).toBe("ACTION_113");
+    });
+
+
+    test("Should return the type of the action for action set action", () => {
+        const set = actionSet("test");
+        const creator = set.action("ACTION_113")<number>();
+        const type = getType(creator);
+
+        expect(type).toBe("test/ACTION_113");
+    })
 });
 
 
