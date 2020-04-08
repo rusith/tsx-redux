@@ -1,7 +1,7 @@
 import {action, getType, isType} from "../action";
 import {actionSet} from "../actionSet";
 
-describe("actionCreator", () => {
+describe("action", () => {
     test("has a type extended string", () => {
         action("T");
     });
@@ -30,6 +30,16 @@ describe("actionCreator", () => {
         const act = ac("data-01");
         expect(act.data).toBe("data-01");
         expect(act.type).toBe("AC");
+    });
+    
+    test("should not fail if the context is undefined", () => {
+        const ac = action.bind(undefined)("NAME")();
+        expect(ac().type).toBe("NAME");
+    });
+    
+    test("should not fail if the context is null", () => {
+        const ac = action.bind(null)("NAME")();
+        expect(ac().type).toBe("NAME");
     });
 });
 

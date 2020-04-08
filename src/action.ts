@@ -34,7 +34,7 @@ export function action<T extends string,
 
 export function action<T extends string, InnerCreator extends GenericActionCreator<T>, >
     (originalType: T, customCreatorCallback?: (type: T) => InnerCreator) {
-    const prefix = this.__prefix ? `${this.__prefix}/` : '';
+    const prefix = (this && this.__prefix) ? `${this.__prefix}/` : '';
     const type = `${prefix}${originalType}`;
 
     const typeAndMatcherFn = {
